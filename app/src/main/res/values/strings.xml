@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">OpenV2ex</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_menu">OpenV2ex Menu</string>
+</resources>
