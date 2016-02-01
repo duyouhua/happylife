@@ -1,4 +1,4 @@
-package com.licrafter.openv2ex;
+package com.licrafter.happylife;
 
 import org.junit.Test;
 

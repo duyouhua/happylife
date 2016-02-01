@@ -1,26 +1,19 @@
-package com.licrafter.openv2ex;
+package com.licrafter.happylife;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.licrafter.openv2ex.base.BaseDrawerLayoutActivity;
-import com.licrafter.openv2ex.base.BaseToolbarActivity;
+import com.licrafter.happylife.base.BaseToolbarActivity;
+import com.licrafter.happylife.ui.fragment.CategoryFragment;
+import com.licrafter.happylife.util.FragmentUtil;
 
-import butterknife.Bind;
-
-public class MainActivity extends BaseDrawerLayoutActivity {
-
+public class MainActivity extends BaseToolbarActivity {
 
 
+    Handler handler;
 
     @Override
     protected int getLayoutId() {
@@ -29,12 +22,12 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+        switchFragment(CategoryFragment.newInstance());
     }
 
     @Override
     protected void initData() {
-
+        handler = new Handler();
     }
 
     @Override
@@ -47,21 +40,6 @@ public class MainActivity extends BaseDrawerLayoutActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    protected NavigationView.OnNavigationItemSelectedListener getNavigationItemSelectedListener() {
-        return null;
-    }
-
-    @Override
-    protected int[] getMenuItemIds() {
-        return new int[0];
-    }
-
-    @Override
-    protected void onMenuItemOnClick(MenuItem now) {
-
     }
 
     @Override
@@ -78,4 +56,21 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void switchFragment(final Fragment fragment) {
+        //延时200ms跳转fragment，减缓drawerlayout卡顿现象
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean show = fragment instanceof CategoryFragment;
+                setAppBarShadow(!show);
+                FragmentUtil.replaceWithAnim(getSupportFragmentManager(), R.id.containerFrameLayout
+                        , fragment, false, "");
+                handler.removeCallbacks(this);
+            }
+        }, 200);
+
+    }
+
+
 }

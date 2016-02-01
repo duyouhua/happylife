@@ -1,4 +1,4 @@
-package com.licrafter.openv2ex;
+package com.licrafter.happylife;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

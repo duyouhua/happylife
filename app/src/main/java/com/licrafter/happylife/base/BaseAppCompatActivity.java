@@ -1,8 +1,13 @@
-package com.licrafter.openv2ex.base;
+package com.licrafter.happylife.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
+
+import com.licrafter.happylife.R;
+import com.licrafter.happylife.util.SharedPreferencesUtil;
 
 import butterknife.ButterKnife;
 
@@ -14,12 +19,14 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
+        SharedPreferencesUtil.init(getApplicationContext());
         this.initToolbar(savedInstanceState);
+        this.initData();
         this.initView(savedInstanceState);
         this.initListener();
-        this.initData();
     }
 
     /**

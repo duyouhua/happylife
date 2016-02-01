@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/drawerSubTitle"
+        android:checkable="false"
+        android:title="V2ex Menu" />
+
+    <item
+        android:id="@+id/drawerMenu"
+        android:title="V2EX = way to explore">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/topicDrawerMenuItem"
+                    android:checked="true"
+                    android:icon="@drawable/ic_drawer_menu_topics"
+                    android:title="话题" />
+
+                <item
+                    android:id="@+id/nodeDrawerMenuItem"
+                    android:icon="@drawable/ic_drawer_node"
+                    android:title="节点" />
+
+            </group>
+            <group
+                android:id="@+id/secondaryGroup"
+                android:checkableBehavior="none"
+                android:menuCategory="secondary">
+                <item
+                    android:id="@+id/settingDrawerMenuItem"
+                    android:icon="@drawable/ic_drawer_menu_setting"
+                    android:title="设置" />
+
+                <item
+                    android:id="@+id/aboutDrawerMenuItem"
+                    android:icon="@drawable/ic_drawer_menu_about"
+                    android:title="关于" />
+            </group>
+        </menu>
+    </item>
+</menu>

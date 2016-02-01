@@ -1,14 +1,14 @@
-package com.licrafter.openv2ex.base;
+package com.licrafter.happylife.base;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.licrafter.openv2ex.R;
+import com.licrafter.happylife.R;
 
 import butterknife.Bind;
 
@@ -30,16 +30,16 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     }
 
     protected void initToolbarHelper() {
-        if (toolbar == null || appBarLayout == null){
+        if (this.toolbar == null || this.appBarLayout == null) {
             return;
         }
         this.setSupportActionBar(toolbar);
         this.actionBarHelper = new ActionBarHelper();
         this.actionBarHelper.init();
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            appBarLayout.setElevation(6.0f);
-        }
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+//            appBarLayout.setElevation(6.0f);
+//        }
     }
 
     @Override
@@ -55,6 +55,12 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
         this.appBarLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
+    public void setAppBarShadow(boolean isShown) {
+        final int elevation = isShown
+                ? getResources().getDimensionPixelSize(R.dimen.appbar_elevation) : 0;
+        ViewCompat.setElevation(appBarLayout, elevation);
+    }
+
     public class ActionBarHelper {
         private ActionBar mActionBar;
         private CharSequence mDrawerTitle;
@@ -66,7 +72,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
 
         public void init() {
             if (mActionBar == null) return;
-            this.mActionBar.setDisplayHomeAsUpEnabled(true);
+            this.mActionBar.setDisplayHomeAsUpEnabled(false);
             this.mActionBar.setDisplayShowHomeEnabled(false);
             this.mTitle = mDrawerTitle = getTitle();
         }

@@ -1,4 +1,4 @@
-package com.licrafter.openv2ex.widget;
+package com.licrafter.happylife.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 
-import com.licrafter.openv2ex.R;
+import com.licrafter.happylife.R;
 
 /**
  * Created by Administrator on 2016/1/31.
