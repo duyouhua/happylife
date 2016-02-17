@@ -10,9 +10,12 @@ import dagger.Component;
 /**
  * Created by Administrator on 2016/2/11.
  */
-@Singleton
-@Component(modules = AppModule.class)
-public interface AppComponent {
+public class AppComponent{
 
-    AppAplication appAplication();
 }
+//@Singleton
+//@Component(modules = AppModule.class)
+//public interface AppComponent {
+//
+//    AppAplication appAplication();
+//}

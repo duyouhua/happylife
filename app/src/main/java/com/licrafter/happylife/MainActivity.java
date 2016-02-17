@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.licrafter.happylife.base.BaseToolbarActivity;
-import com.licrafter.happylife.ui.fragment.CategoryFragment;
+import com.licrafter.happylife.ui.fragment.MainFragment;
 import com.licrafter.happylife.util.FragmentUtil;
 
 public class MainActivity extends BaseToolbarActivity {
@@ -22,7 +22,7 @@ public class MainActivity extends BaseToolbarActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        switchFragment(CategoryFragment.newInstance());
+        switchFragment(MainFragment.newInstance());
     }
 
     @Override
@@ -33,6 +33,17 @@ public class MainActivity extends BaseToolbarActivity {
     @Override
     protected void initListener() {
 
+    }
+
+    @Override
+    protected void initializeDependencyInjector() {
+        super.initializeDependencyInjector();
+        AppAplication aplication = (AppAplication) getApplication();
+//        activityComponent = DaggerActivityComponent.builder()
+//                .appComponent(aplication.getAppComponent())
+//                .activityModule(new ActivityModule(this))
+//                .build();
+//        activityComponent.inject(this);
     }
 
     @Override
@@ -62,7 +73,7 @@ public class MainActivity extends BaseToolbarActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                boolean show = fragment instanceof CategoryFragment;
+                boolean show = fragment instanceof MainFragment;
                 setAppBarShadow(!show);
                 FragmentUtil.replaceWithAnim(getSupportFragmentManager(), R.id.containerFrameLayout
                         , fragment, false, "");

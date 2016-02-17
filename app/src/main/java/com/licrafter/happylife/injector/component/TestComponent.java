@@ -7,8 +7,11 @@ import dagger.Component;
 /**
  * Created by Administrator on 2016/2/4.
  */
-@Component(modules = {com.licrafter.happylife.injector.module.TestModule.class})
-public interface TestComponent {
+public class TestComponent{
 
-    void inject(MainActivity mainActivity);
 }
+//@Component(modules = {com.licrafter.happylife.injector.module.TestModule.class})
+//public interface TestComponent {
+//
+//    void inject(MainActivity mainActivity);
+//}

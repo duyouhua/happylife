@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.licrafter.happylife.ui.fragment.NodesFragment;
+import com.licrafter.happylife.ui.fragment.GodsListFragment;
 
 /**
  * Created by Administrator on 2016/2/2.
@@ -18,7 +18,7 @@ public class CategoryAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return NodesFragment.newInstance();
+        return GodsListFragment.newInstance();
     }
 
     @Override
