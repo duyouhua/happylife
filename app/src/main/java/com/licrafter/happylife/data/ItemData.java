@@ -7,8 +7,9 @@ public class ItemData<T> {
     private int type;
     private T data;
 
-    public static int TYPE_GOODS = 0x1;
-    public static int TYPE_BANNER = 0x2;
+    public static final int TYPE_GOODS = 0x1;
+    public static final int TYPE_BANNER = 0x2;
+    public static final int TYPE_FOOTER = 0x3;
 
     public ItemData(int type, T data) {
         this.type = type;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.licrafter.happylife.R;
 import com.licrafter.happylife.data.ItemData;
+import com.licrafter.happylife.data.entity.BaseBannerData;
 import com.licrafter.happylife.widget.BannerView;
 
 import java.util.ArrayList;
@@ -30,8 +31,6 @@ public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading;
     private boolean hasNextPage;
-    private static int TYPE_FOOTER = 0x3;
-    private static int TYPE_ITEM = 0x4;
 
     public GoodsLoadMoreAdapter(Context context, ArrayList<ItemData> data) {
         this.context = context;
@@ -41,11 +40,11 @@ public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_FOOTER) {
+        if (viewType == ItemData.TYPE_FOOTER) {
             View footer = layoutInflater.inflate(R.layout.item_footer, parent, false);
             return new FooterViewHolder(footer);
         } else if (viewType == ItemData.TYPE_BANNER) {
-            BannerView bannerView = new BannerView(context);
+            BannerView bannerView = new BannerView(context, null);
             return new BannerViewHolder(bannerView);
         } else {
             View goods = layoutInflater.inflate(R.layout.item_goods, parent, false);
@@ -80,7 +79,7 @@ public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (position >= mDatas.size()) {
-            return TYPE_FOOTER;
+            return ItemData.TYPE_FOOTER;
         } else {
             if (mDatas.get(position).getType() == ItemData.TYPE_BANNER) {
                 return ItemData.TYPE_BANNER;
@@ -121,6 +120,13 @@ public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
 
         public BannerViewHolder(View itemView) {
             super(itemView);
+            BannerView bannerView = (BannerView) itemView;
+            ArrayList<BaseBannerData> bannerDatas = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                BaseBannerData bannerData = new BaseBannerData();
+                bannerDatas.add(bannerData);
+            }
+            bannerView.init(bannerDatas);
         }
     }
 

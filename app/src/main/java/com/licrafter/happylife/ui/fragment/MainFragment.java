@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.licrafter.happylife.R;
 import com.licrafter.happylife.base.BaseFragment;
-import com.licrafter.happylife.ui.adapter.CategoryAdapter;
+import com.licrafter.happylife.ui.adapter.MainAdapter;
 
 import butterknife.Bind;
 
@@ -23,7 +23,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_category;
+        return R.layout.fragment_main;
     }
 
     public static MainFragment newInstance() {
@@ -37,7 +37,7 @@ public class MainFragment extends BaseFragment {
         categoryTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         categoryTabLayout.setTabTextColors(getResources().getColor(R.color.grey), getResources().getColor(R.color.white));
         ViewCompat.setElevation(categoryTabLayout, getResources().getDimension(R.dimen.appbar_elevation));
-        categoryViewPager.setAdapter(new CategoryAdapter(getChildFragmentManager()));
+        categoryViewPager.setAdapter(new MainAdapter(getChildFragmentManager()));
         categoryTabLayout.setupWithViewPager(categoryViewPager);
     }
 

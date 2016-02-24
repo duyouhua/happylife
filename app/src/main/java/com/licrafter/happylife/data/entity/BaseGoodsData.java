@@ -9,6 +9,7 @@ public class BaseGoodsData {
     private String iconUrl;
     private String infoStr;
     private String goodsUrl;
+    private String category;
     private String createdAt;
     private String updatedAt;
     private int price;
@@ -76,5 +77,13 @@ public class BaseGoodsData {
 
     public void setObjectId(String objectId) {
         this.objectId = objectId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

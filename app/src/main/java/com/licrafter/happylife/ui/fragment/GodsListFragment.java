@@ -5,12 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 import com.licrafter.happylife.MainActivity;
@@ -66,7 +62,9 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void initViews(View view) {
-        goodsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager.setSpanSizeLookup(new AutoSpanSizeLookUp());
+        goodsRecyclerView.setLayoutManager(gridLayoutManager);
         goodsRecyclerView.setAdapter(goodsAdapter);
     }
 
@@ -80,8 +78,8 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
         this.goodsListPresenter = new GoodsListPresenter();
         this.goodsListPresenter.attachView(this);
         goodsList = new ArrayList<>();
-        this.goodsAdapter = new GoodsAdapter(getContext(),goodsList);
-        if (goodsList.size()==0) {
+        this.goodsAdapter = new GoodsAdapter(getContext(), goodsList);
+        if (goodsList.size() == 0) {
             this.goodsListPresenter.getGoods();
             this.goodsListPresenter.getBanner();
         }
@@ -90,15 +88,13 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void onGetGoodsSuccess(List<ItemData> goods, boolean refresh) {
-        android.util.Log.d("ljx","成功");
         goodsList.addAll(goods);
-        goodsList.add(0,new ItemData(ItemData.TYPE_BANNER,null));
+        goodsList.add(0, new ItemData(ItemData.TYPE_BANNER, null));
         goodsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onGetBannerSuccess(ItemData banner) {
-
     }
 
     @Override
@@ -132,10 +128,25 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
             BaseGoodsData goods = (BaseGoodsData) mDatas.get(position).getData();
             Glide.with(context).load(goods.getIconUrl()).into(vh.goodsPicImageView);
             vh.goodsInfoTextView.setText(goods.getInfoStr());
-            vh.goodsPriceTextView.setText("￥"+goods.getPrice());
-            vh.goodsOldPriceTextView.setText(goods.getOldPrice()+"元");
+            vh.goodsPriceTextView.setText("￥" + goods.getPrice());
+            vh.goodsOldPriceTextView.setText(goods.getOldPrice() + "元");
         }
     }
 
+    public class AutoSpanSizeLookUp extends GridLayoutManager.SpanSizeLookup{
+
+        @Override
+        public int getSpanSize(int position) {
+            switch (goodsAdapter.getItemViewType(position)){
+                case ItemData.TYPE_BANNER:
+                    return 2;
+                case ItemData.TYPE_GOODS:
+                    return 1;
+                case ItemData.TYPE_FOOTER:
+                    return 1;
+                default: return -1;
+            }
+        }
+    }
 
 }
