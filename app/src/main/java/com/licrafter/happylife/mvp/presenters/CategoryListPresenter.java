@@ -7,8 +7,6 @@ import com.licrafter.happylife.mvp.views.CategoryListView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -19,7 +17,6 @@ import rx.schedulers.Schedulers;
  */
 public class CategoryListPresenter extends BasePresenter<CategoryListView> {
 
-    @Inject
     public CategoryListPresenter() {
 
     }

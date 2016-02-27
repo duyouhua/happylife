@@ -3,10 +3,8 @@ package com.licrafter.happylife.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.licrafter.happylife.R;
 import com.licrafter.happylife.util.SharedPreferencesUtil;
 
 import butterknife.ButterKnife;
@@ -16,11 +14,9 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
-    //    protected ActivityComponent activityComponent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //       initializeDependencyInjector();
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
         SharedPreferencesUtil.init(getApplicationContext());
@@ -54,14 +50,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected abstract void initData();
 
     protected abstract void initListener();
-
-    protected void initializeDependencyInjector() {
-
-    }
-
-//    public ActivityComponent getActivityComponent(){
-//        return activityComponent;
-//    }
 
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

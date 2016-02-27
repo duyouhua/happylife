@@ -9,14 +9,9 @@ import com.licrafter.happylife.data.entity.BaseGoodsData;
 import com.licrafter.happylife.model.impl.BannersModel;
 import com.licrafter.happylife.model.impl.GoodsModel;
 import com.licrafter.happylife.mvp.views.GoodsListView;
-import com.licrafter.happylife.util.Constants;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -27,7 +22,6 @@ import rx.schedulers.Schedulers;
  */
 public class GoodsListPresenter extends BasePresenter<GoodsListView> {
 
-    @Inject
     public GoodsListPresenter() {
 
     }

@@ -36,17 +36,6 @@ public class MainActivity extends BaseToolbarActivity {
     }
 
     @Override
-    protected void initializeDependencyInjector() {
-        super.initializeDependencyInjector();
-        AppAplication aplication = (AppAplication) getApplication();
-//        activityComponent = DaggerActivityComponent.builder()
-//                .appComponent(aplication.getAppComponent())
-//                .activityModule(new ActivityModule(this))
-//                .build();
-//        activityComponent.inject(this);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -82,6 +71,4 @@ public class MainActivity extends BaseToolbarActivity {
         }, 200);
 
     }
-
-
 }

@@ -13,17 +13,6 @@ public class AppAplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
- //       initializeInjector();
     }
 
-//    private void initializeInjector() {
-//        appComponent = DaggerAppComponent.builder()
-//                .appModule(new AppModule(this))
-//                .build();
-//    }
-
-//    public AppComponent getAppComponent() {
-//  //      appComponent.appAplication();
-//        return appComponent;
-//    }
 }
