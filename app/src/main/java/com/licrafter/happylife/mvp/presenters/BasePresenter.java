@@ -2,6 +2,8 @@ package com.licrafter.happylife.mvp.presenters;
 
 import com.licrafter.happylife.mvp.views.MvpView;
 
+import java.lang.ref.WeakReference;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -9,12 +11,12 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
-    private T mvpView;
+    private WeakReference<T> mvpView;
     public CompositeSubscription compositeSubscription;
 
     @Override
     public void attachView(T mvpView) {
-        this.mvpView = mvpView;
+        this.mvpView = new WeakReference<T>(mvpView);
         this.compositeSubscription = new CompositeSubscription();
     }
 
@@ -26,10 +28,11 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
     }
 
     public boolean isViewAttached() {
+        mvpView.clear();
         return mvpView != null;
     }
 
     public T getMvpView() {
-        return mvpView;
+        return mvpView.get();
     }
 }

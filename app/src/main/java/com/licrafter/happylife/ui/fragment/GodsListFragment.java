@@ -1,15 +1,11 @@
 package com.licrafter.happylife.ui.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.licrafter.happylife.MainActivity;
 import com.licrafter.happylife.R;
 import com.licrafter.happylife.base.BaseFragment;
 import com.licrafter.happylife.data.ItemData;
@@ -32,27 +28,12 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     RecyclerView goodsRecyclerView;
     GoodsListPresenter goodsListPresenter;
 
-    private MainActivity activity;
     private ArrayList<ItemData> goodsList;
     private GoodsAdapter goodsAdapter;
 
     public static GodsListFragment newInstance() {
         GodsListFragment fragment = new GodsListFragment();
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (getActivity() != null && activity instanceof MainActivity) {
-            this.activity = (MainActivity) activity;
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initializeDependencyInjector();
     }
 
     @Override
@@ -108,13 +89,6 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
         super.onDestroy();
     }
 
-    private void initializeDependencyInjector() {
-//        DaggerFragmentComponent.builder()
-//                .fragmentModule(new FragmentModule())
-//                .activityComponent(activity.getActivityComponent())
-//                .build()
-//                .inject(this);
-    }
 
     public class GoodsAdapter extends GoodsLoadMoreAdapter {
 
