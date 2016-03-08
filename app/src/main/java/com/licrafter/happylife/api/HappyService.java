@@ -33,6 +33,15 @@ public interface HappyService {
     Observable<GoodsData> getAllGoods(@Query("order") String order);
 
     /**
+     * 根据category查询商品
+     *
+     * @param category
+     * @return
+     */
+    @GET("classes/Goods")
+    Observable<GoodsData> getGoodsByCategory(@Query("where") String category, @Query("order") String order);
+
+    /**
      * 查询banner列表，按照创建时间排序
      *
      * @param order

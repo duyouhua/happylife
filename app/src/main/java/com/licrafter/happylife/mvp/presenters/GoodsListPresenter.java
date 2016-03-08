@@ -29,9 +29,9 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
     /**
      * 请求商品列表
      */
-    public void getGoods() {
+    public void getGoods(String category) {
 
-        this.compositeSubscription.add(GoodsModel.getInstance().getAllGoods(1, 1)
+        this.compositeSubscription.add(GoodsModel.getInstance().getGoodsByType(category, 1, 1)
                 .map(new Func1<GoodsData, ArrayList<BaseGoodsData>>() {
 
                     @Override
@@ -62,7 +62,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
 
                     @Override
                     public void onNext(ArrayList<ItemData> datas) {
-                        GoodsListPresenter.this.getMvpView().onGetGoodsSuccess(datas,false);
+                        getMvpView().onGetGoodsSuccess(datas, false);
                     }
                 }));
     }
@@ -83,7 +83,9 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
                 .subscribe(new Subscriber<ItemData>() {
                     @Override
                     public void onCompleted() {
-
+                        if (GoodsListPresenter.this.compositeSubscription != null) {
+                            GoodsListPresenter.this.compositeSubscription.remove(this);
+                        }
                     }
 
                     @Override
@@ -93,7 +95,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
 
                     @Override
                     public void onNext(ItemData itemData) {
-                        android.util.Log.d("ljx", ((ArrayList<BaseBannerData>) itemData.getData()).size() + "banner");
+                        getMvpView().onGetBannerSuccess(itemData);
                     }
                 }));
     }

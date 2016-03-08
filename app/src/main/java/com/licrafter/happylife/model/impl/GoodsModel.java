@@ -1,8 +1,10 @@
 package com.licrafter.happylife.model.impl;
 
 import com.licrafter.happylife.api.HappyLife;
+import com.licrafter.happylife.api.Query;
 import com.licrafter.happylife.data.GoodsData;
 import com.licrafter.happylife.model.IGoodsModel;
+import com.licrafter.happylife.util.Constants;
 
 import rx.Observable;
 
@@ -23,15 +25,18 @@ public class GoodsModel implements IGoodsModel {
     /**
      * 分页查询商品列表
      *
-     * @param type 种类
+     * @param category 种类
      * @param page 页码
      * @param size 每页数量
      * @return
      */
     @Override
-    public Observable<GoodsData> getGoodsByType(String type, int page, int size) {
-
-        return null;
+    public Observable<GoodsData> getGoodsByType(String category, int page, int size) {
+        if (category.equals(Constants.TYPE_ALL)){
+            return getAllGoods(page,size);
+        }else {
+            return HappyLife.getInstance().getHappyService().getGoodsByCategory(Query.CateGoryQuery(category),Query.CREATED_ASC);
+        }
     }
 
     /**

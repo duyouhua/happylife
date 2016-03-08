@@ -15,6 +15,7 @@ import com.licrafter.happylife.data.entity.BaseGoodsData;
 import com.licrafter.happylife.mvp.presenters.GoodsListPresenter;
 import com.licrafter.happylife.mvp.views.GoodsListView;
 import com.licrafter.happylife.ui.adapter.GoodsLoadMoreAdapter;
+import com.licrafter.happylife.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,13 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     private ArrayList<ItemData> goodsList;
     private GoodsAdapter goodsAdapter;
     private String category;
+    private String title;
 
-    public static GodsListFragment newInstance(String category) {
+    public static GodsListFragment newInstance(String category, String title) {
         GodsListFragment fragment = new GodsListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("category", category);
+        bundle.putString("title", title);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -47,6 +50,7 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             category = getArguments().getString("category");
+            title = getArguments().getString("title");
         }
     }
 
@@ -57,8 +61,8 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void initViews(View view) {
-        if (!category.equals("all") && getBaseActivity().getSupportActionBar() != null) {
-            getBaseActivity().getSupportActionBar().setTitle(category);
+        if (!category.equals(Constants.TYPE_ALL) && getBaseActivity().getSupportActionBar() != null) {
+            getBaseActivity().getSupportActionBar().setTitle(title);
             getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -79,8 +83,10 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
         goodsList = new ArrayList<>();
         this.goodsAdapter = new GoodsAdapter(getContext(), goodsList);
         if (goodsList.size() == 0) {
-            this.goodsListPresenter.getGoods();
-            this.goodsListPresenter.getBanner();
+            this.goodsListPresenter.getGoods(category);
+            if (category.equals(Constants.TYPE_ALL)) {
+                this.goodsListPresenter.getBanner();
+            }
         }
     }
 
@@ -88,12 +94,13 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     @Override
     public void onGetGoodsSuccess(List<ItemData> goods, boolean refresh) {
         goodsList.addAll(goods);
-        goodsList.add(0, new ItemData(ItemData.TYPE_BANNER, null));
         goodsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onGetBannerSuccess(ItemData banner) {
+        goodsList.add(0, banner);
+        goodsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -102,9 +109,9 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
+        super.onDestroy();
         this.goodsListPresenter.detachView();
-        super.onDestroyView();
     }
 
 

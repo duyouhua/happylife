@@ -42,7 +42,7 @@ public class MainFragment extends BaseFragment {
         categoryTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         categoryTabLayout.setTabTextColors(getResources().getColor(R.color.grey), getResources().getColor(R.color.white));
         ViewCompat.setElevation(categoryTabLayout, getResources().getDimension(R.dimen.appbar_elevation));
-        categoryViewPager.setAdapter(new MainAdapter(getChildFragmentManager()));
+        categoryViewPager.setAdapter(new MainAdapter(getBaseActivity(), getChildFragmentManager()));
         categoryTabLayout.setupWithViewPager(categoryViewPager);
     }
 

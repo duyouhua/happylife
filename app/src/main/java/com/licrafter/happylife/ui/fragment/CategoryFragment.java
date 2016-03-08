@@ -68,13 +68,12 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     public void onGetCategorySuccess(ArrayList<BaseCategoryData> datas) {
         categoryDatas = datas;
         categoryAdapter.setData(categoryDatas);
-        android.util.Log.d("ljx", datas.size() + "多少");
     }
 
     private CategoryAdapter.OnItemClickListener listener = new CategoryAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(String category) {
-            getBaseActivity().switchFragment(GodsListFragment.newInstance("type1"),true);
+        public void onItemClick(String category,String title) {
+            getBaseActivity().switchFragment(GodsListFragment.newInstance(category,title),true);
         }
     };
 

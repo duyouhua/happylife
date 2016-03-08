@@ -59,14 +59,14 @@ public class CategoryAdapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(categoryDatas.get(position).getName());
+                    onItemClickListener.onItemClick(categoryDatas.get(position).getObjectId(), categoryDatas.get(position).getName());
                 }
             });
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(context).load("http://i11.tietuku.com/7fd7fb668ada8e64.png").into(viewHolder.categoryImageView);
+        Glide.with(context).load(categoryDatas.get(position).getIconUrl()).into(viewHolder.categoryImageView);
         viewHolder.categoryTextView.setText(categoryDatas.get(position).getName());
         return convertView;
     }
@@ -76,7 +76,7 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(String category);
+        public void onItemClick(String category, String title);
     }
 
     public void setData(ArrayList<BaseCategoryData> categoryDatas) {

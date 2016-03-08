@@ -5,4 +5,6 @@ package com.licrafter.happylife.util;
  */
 public class Constants {
 
+    public static String TYPE_ALL = "all";
+
 }
