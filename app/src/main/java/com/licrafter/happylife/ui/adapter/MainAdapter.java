@@ -21,11 +21,11 @@ public class MainAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return GodsListFragment.newInstance();
+                return GodsListFragment.newInstance("all");
             case 1:
                 return CategoryFragment.newInstance();
             default:
-                return GodsListFragment.newInstance();
+                return GodsListFragment.newInstance("all");
         }
     }
 

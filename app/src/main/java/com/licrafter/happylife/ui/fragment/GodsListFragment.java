@@ -1,6 +1,8 @@
 package com.licrafter.happylife.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,10 +32,22 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     private ArrayList<ItemData> goodsList;
     private GoodsAdapter goodsAdapter;
+    private String category;
 
-    public static GodsListFragment newInstance() {
+    public static GodsListFragment newInstance(String category) {
         GodsListFragment fragment = new GodsListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("category", category);
+        fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            category = getArguments().getString("category");
+        }
     }
 
     @Override
@@ -43,6 +57,10 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void initViews(View view) {
+        if (!category.equals("all") && getBaseActivity().getSupportActionBar() != null) {
+            getBaseActivity().getSupportActionBar().setTitle(category);
+            getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new AutoSpanSizeLookUp());
         goodsRecyclerView.setLayoutManager(gridLayoutManager);
@@ -84,9 +102,9 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         this.goodsListPresenter.detachView();
-        super.onDestroy();
+        super.onDestroyView();
     }
 
 
@@ -107,18 +125,19 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
         }
     }
 
-    public class AutoSpanSizeLookUp extends GridLayoutManager.SpanSizeLookup{
+    public class AutoSpanSizeLookUp extends GridLayoutManager.SpanSizeLookup {
 
         @Override
         public int getSpanSize(int position) {
-            switch (goodsAdapter.getItemViewType(position)){
+            switch (goodsAdapter.getItemViewType(position)) {
                 case ItemData.TYPE_BANNER:
                     return 2;
                 case ItemData.TYPE_GOODS:
                     return 1;
                 case ItemData.TYPE_FOOTER:
                     return 1;
-                default: return -1;
+                default:
+                    return -1;
             }
         }
     }

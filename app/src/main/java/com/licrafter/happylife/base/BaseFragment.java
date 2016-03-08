@@ -1,11 +1,14 @@
 package com.licrafter.happylife.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.licrafter.happylife.MainActivity;
 
 import butterknife.ButterKnife;
 
@@ -14,6 +17,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
+    private MainActivity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (MainActivity) context;
+    }
 
     @Nullable
     @Override
@@ -29,6 +39,10 @@ public abstract class BaseFragment extends Fragment {
         initData();
         initViews(view);
         setListeners();
+    }
+
+    protected MainActivity getBaseActivity() {
+        return activity;
     }
 
     public abstract int getLayoutId();

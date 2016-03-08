@@ -22,13 +22,12 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     @Override
     public void detachView() {
-        this.mvpView = null;
+        this.mvpView.clear();
         this.compositeSubscription.unsubscribe();
         this.compositeSubscription = null;
     }
 
     public boolean isViewAttached() {
-        mvpView.clear();
         return mvpView != null;
     }
 

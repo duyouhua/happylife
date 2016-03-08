@@ -23,6 +23,7 @@ public class CategoryAdapter extends BaseAdapter {
 
     private ArrayList<BaseCategoryData> categoryDatas;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
     public CategoryAdapter(Context context) {
         this.context = context;
@@ -45,7 +46,7 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false);
@@ -55,13 +56,27 @@ public class CategoryAdapter extends BaseAdapter {
                     , parent.getWidth() / 3);
             convertView.setLayoutParams(new GridView.LayoutParams(params));
             convertView.setTag(viewHolder);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(categoryDatas.get(position).getName());
+                }
+            });
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(context).load(categoryDatas.get(position).getIconUrl()).into(viewHolder.categoryImageView);
+        Glide.with(context).load("http://i11.tietuku.com/7fd7fb668ada8e64.png").into(viewHolder.categoryImageView);
         viewHolder.categoryTextView.setText(categoryDatas.get(position).getName());
         return convertView;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(String category);
     }
 
     public void setData(ArrayList<BaseCategoryData> categoryDatas) {

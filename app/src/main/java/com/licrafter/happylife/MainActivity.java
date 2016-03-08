@@ -22,7 +22,7 @@ public class MainActivity extends BaseToolbarActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        switchFragment(MainFragment.newInstance());
+        switchFragment(MainFragment.newInstance(),false);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MainActivity extends BaseToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void switchFragment(final Fragment fragment) {
+    public void switchFragment(final Fragment fragment, final boolean addToStack) {
         //延时200ms跳转fragment，减缓drawerlayout卡顿现象
         handler.postDelayed(new Runnable() {
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends BaseToolbarActivity {
                 boolean show = fragment instanceof MainFragment;
                 setAppBarShadow(!show);
                 FragmentUtil.replaceWithAnim(getSupportFragmentManager(), R.id.containerFrameLayout
-                        , fragment, false, "");
+                        , fragment, addToStack, "");
                 handler.removeCallbacks(this);
             }
         }, 200);

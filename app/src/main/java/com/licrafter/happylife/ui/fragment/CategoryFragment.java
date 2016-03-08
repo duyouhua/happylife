@@ -10,6 +10,7 @@ import com.licrafter.happylife.data.entity.BaseCategoryData;
 import com.licrafter.happylife.mvp.presenters.CategoryListPresenter;
 import com.licrafter.happylife.mvp.views.CategoryListView;
 import com.licrafter.happylife.ui.adapter.CategoryAdapter;
+import com.licrafter.happylife.util.FragmentUtil;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     public void initData() {
         categoryDatas = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(getContext());
+        categoryAdapter.setOnItemClickListener(listener);
         categoryGridView.setAdapter(categoryAdapter);
         this.categoryListPresenter = new CategoryListPresenter();
         this.categoryListPresenter.attachView(this);
@@ -66,8 +68,15 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     public void onGetCategorySuccess(ArrayList<BaseCategoryData> datas) {
         categoryDatas = datas;
         categoryAdapter.setData(categoryDatas);
-        android.util.Log.d("ljx",datas.size()+"多少");
+        android.util.Log.d("ljx", datas.size() + "多少");
     }
+
+    private CategoryAdapter.OnItemClickListener listener = new CategoryAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(String category) {
+            getBaseActivity().switchFragment(GodsListFragment.newInstance("type1"),true);
+        }
+    };
 
     @Override
     public void onFailure(Throwable e) {
@@ -75,8 +84,8 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         this.categoryListPresenter.detachView();
-        super.onDestroy();
+        super.onDestroyView();
     }
 }

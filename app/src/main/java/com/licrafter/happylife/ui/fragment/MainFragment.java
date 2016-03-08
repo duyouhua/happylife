@@ -33,6 +33,11 @@ public class MainFragment extends BaseFragment {
 
     @Override
     public void initViews(View view) {
+        getBaseActivity().setAppBarShadow(false);
+        if (getBaseActivity().getSupportActionBar() != null) {
+            getBaseActivity().getSupportActionBar().setTitle(getString(R.string.app_name));
+            getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         categoryTabLayout.setTabMode(TabLayout.MODE_FIXED);
         categoryTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         categoryTabLayout.setTabTextColors(getResources().getColor(R.color.grey), getResources().getColor(R.color.white));
