@@ -47,6 +47,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ArrayList<ItemData>>() {
                     @Override
                     public void onCompleted() {
@@ -80,6 +81,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ItemData>() {
                     @Override
                     public void onCompleted() {

@@ -34,6 +34,7 @@ public class CategoryListPresenter extends BasePresenter<CategoryListView> {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ArrayList<BaseCategoryData>>() {
                     @Override
                     public void onCompleted() {
@@ -63,6 +64,7 @@ public class CategoryListPresenter extends BasePresenter<CategoryListView> {
         this.compositeSubscription.add(CategoriesModel.getInstance().createCategory(categoryData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
