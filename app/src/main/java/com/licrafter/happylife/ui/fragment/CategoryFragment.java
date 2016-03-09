@@ -44,24 +44,33 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             categoryGridView.setNestedScrollingEnabled(true);
         }
+        categoryDatas = new ArrayList<>();
+        categoryAdapter = new CategoryAdapter(getContext());
+        categoryGridView.setAdapter(categoryAdapter);
     }
 
     @Override
     public void setListeners() {
-
+        categoryAdapter.setOnItemClickListener(listener);
     }
 
     @Override
     public void initData() {
-        categoryDatas = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(getContext());
-        categoryAdapter.setOnItemClickListener(listener);
-        categoryGridView.setAdapter(categoryAdapter);
-        this.categoryListPresenter = new CategoryListPresenter();
-        this.categoryListPresenter.attachView(this);
+
         if (categoryDatas.size() == 0) {
             categoryListPresenter.getCategories();
         }
+    }
+
+    @Override
+    public void bind() {
+        this.categoryListPresenter = new CategoryListPresenter();
+        this.categoryListPresenter.attachView(this);
+    }
+
+    @Override
+    public void unbind() {
+        this.categoryListPresenter.detachView();
     }
 
     @Override
@@ -82,9 +91,4 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        this.categoryListPresenter.detachView();
-        super.onDestroyView();
-    }
 }

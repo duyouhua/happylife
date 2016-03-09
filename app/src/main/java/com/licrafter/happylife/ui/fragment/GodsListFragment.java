@@ -65,9 +65,11 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
             getBaseActivity().getSupportActionBar().setTitle(title);
             getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        goodsList = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new AutoSpanSizeLookUp());
         goodsRecyclerView.setLayoutManager(gridLayoutManager);
+        goodsAdapter = new GoodsAdapter(getContext(), goodsList);
         goodsRecyclerView.setAdapter(goodsAdapter);
     }
 
@@ -78,16 +80,23 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void initData() {
-        this.goodsListPresenter = new GoodsListPresenter();
-        this.goodsListPresenter.attachView(this);
-        goodsList = new ArrayList<>();
-        this.goodsAdapter = new GoodsAdapter(getContext(), goodsList);
         if (goodsList.size() == 0) {
             this.goodsListPresenter.getGoods(category);
             if (category.equals(Constants.TYPE_ALL)) {
                 this.goodsListPresenter.getBanner();
             }
         }
+    }
+
+    @Override
+    public void bind() {
+        this.goodsListPresenter = new GoodsListPresenter();
+        this.goodsListPresenter.attachView(this);
+    }
+
+    @Override
+    public void unbind() {
+        this.goodsListPresenter.detachView();
     }
 
 
@@ -106,12 +115,6 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
     @Override
     public void onFailure(Throwable e) {
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.goodsListPresenter.detachView();
     }
 
 

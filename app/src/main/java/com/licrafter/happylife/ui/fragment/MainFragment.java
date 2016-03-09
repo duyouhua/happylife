@@ -55,4 +55,14 @@ public class MainFragment extends BaseFragment {
     public void initData() {
 
     }
+
+    @Override
+    public void bind() {
+
+    }
+
+    @Override
+    public void unbind() {
+
+    }
 }

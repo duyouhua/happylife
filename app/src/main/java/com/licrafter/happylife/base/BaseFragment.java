@@ -36,9 +36,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
         initViews(view);
+        bind();
+        initData();
         setListeners();
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbind();
+        super.onDestroyView();
     }
 
     protected MainActivity getBaseActivity() {
@@ -52,4 +59,8 @@ public abstract class BaseFragment extends Fragment {
     public abstract void setListeners();
 
     public abstract void initData();
+
+    public abstract void bind();
+
+    public abstract void unbind();
 }
