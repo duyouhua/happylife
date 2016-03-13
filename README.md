@@ -5,6 +5,7 @@
 ---
 
 项目使用RxJava+Retrofit2.0+MVP
+后台查询使用LeanCloud REST API
 
 主要实现了商品列表的获取(加载更多和刷新)与展示，根据商品种类查询
 
