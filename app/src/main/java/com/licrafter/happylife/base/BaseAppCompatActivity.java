@@ -21,7 +21,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         SharedPreferencesUtil.init(getApplicationContext());
         this.initToolbar(savedInstanceState);
-        this.initData();
+        this.loadData();
         this.initView(savedInstanceState);
         this.initListener();
     }
@@ -47,7 +47,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     protected abstract void initView(Bundle savedInstanceState);
 
-    protected abstract void initData();
+    protected abstract void loadData();
 
     protected abstract void initListener();
 

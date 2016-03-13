@@ -29,9 +29,9 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
     /**
      * 请求商品列表
      */
-    public void getGoods(String category) {
+    public void getGoods(String category,final int page, int size) {
 
-        this.compositeSubscription.add(GoodsModel.getInstance().getGoodsByType(category, 1, 1)
+        this.compositeSubscription.add(GoodsModel.getInstance().getGoodsByType(category, page, size)
                 .map(new Func1<GoodsData, ArrayList<BaseGoodsData>>() {
 
                     @Override
@@ -59,6 +59,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListView> {
                     @Override
                     public void onError(Throwable e) {
                         android.util.Log.d("ljx", e.toString());
+                        getMvpView().onFailure(e);
                     }
 
                     @Override

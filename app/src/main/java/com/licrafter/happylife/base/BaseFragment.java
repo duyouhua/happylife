@@ -17,12 +17,12 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private MainActivity activity;
+    private BaseToolbarActivity activity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.activity = (MainActivity) context;
+        this.activity = (BaseToolbarActivity) context;
     }
 
     @Nullable
@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         bind();
-        initData();
+        loadData();
         setListeners();
     }
 
@@ -48,7 +48,7 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
     }
 
-    protected MainActivity getBaseActivity() {
+    protected BaseToolbarActivity getBaseActivity() {
         return activity;
     }
 
@@ -58,7 +58,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract void setListeners();
 
-    public abstract void initData();
+    public abstract void loadData();
 
     public abstract void bind();
 

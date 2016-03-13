@@ -30,7 +30,7 @@ public interface HappyService {
      * @return
      */
     @GET("classes/Goods")
-    Observable<GoodsData> getAllGoods(@Query("order") String order);
+    Observable<GoodsData> getAllGoods(@Query("order") String order,@Query("skip") int skip,@Query("limit") int limit);
 
     /**
      * 根据category查询商品
@@ -39,7 +39,7 @@ public interface HappyService {
      * @return
      */
     @GET("classes/Goods")
-    Observable<GoodsData> getGoodsByCategory(@Query("where") String category, @Query("order") String order);
+    Observable<GoodsData> getGoodsByCategory(@Query("where") String category, @Query("order") String order,@Query("skip") int skip,@Query("limit") int limit);
 
     /**
      * 查询banner列表，按照创建时间排序

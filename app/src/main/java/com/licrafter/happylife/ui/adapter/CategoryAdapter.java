@@ -66,7 +66,8 @@ public class CategoryAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(context).load(categoryDatas.get(position).getIconUrl()).into(viewHolder.categoryImageView);
+        Glide.with(context).load(categoryDatas.get(position).getIconUrl())
+                .fitCenter().into(viewHolder.categoryImageView);
         viewHolder.categoryTextView.setText(categoryDatas.get(position).getName());
         return convertView;
     }

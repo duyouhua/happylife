@@ -26,7 +26,7 @@ public class MainActivity extends BaseToolbarActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void loadData() {
         handler = new Handler();
     }
 

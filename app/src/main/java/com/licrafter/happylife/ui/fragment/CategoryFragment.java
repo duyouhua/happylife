@@ -1,5 +1,6 @@
 package com.licrafter.happylife.ui.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.widget.GridView;
@@ -9,6 +10,7 @@ import com.licrafter.happylife.base.BaseFragment;
 import com.licrafter.happylife.data.entity.BaseCategoryData;
 import com.licrafter.happylife.mvp.presenters.CategoryListPresenter;
 import com.licrafter.happylife.mvp.views.CategoryListView;
+import com.licrafter.happylife.ui.activity.CategoryGodsActivity;
 import com.licrafter.happylife.ui.adapter.CategoryAdapter;
 import com.licrafter.happylife.util.FragmentUtil;
 
@@ -55,7 +57,7 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     }
 
     @Override
-    public void initData() {
+    public void loadData() {
 
         if (categoryDatas.size() == 0) {
             categoryListPresenter.getCategories();
@@ -82,7 +84,10 @@ public class CategoryFragment extends BaseFragment implements CategoryListView {
     private CategoryAdapter.OnItemClickListener listener = new CategoryAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(String category,String title) {
-            getBaseActivity().switchFragment(GodsListFragment.newInstance(category,title),true);
+            Intent intent = new Intent(getBaseActivity(), CategoryGodsActivity.class);
+            intent.putExtra("category",category);
+            intent.putExtra("title",title);
+            startActivity(intent);
         }
     };
 

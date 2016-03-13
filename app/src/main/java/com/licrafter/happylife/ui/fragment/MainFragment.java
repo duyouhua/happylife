@@ -1,13 +1,16 @@
 package com.licrafter.happylife.ui.fragment;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.view.View;
 
 import com.licrafter.happylife.R;
 import com.licrafter.happylife.base.BaseFragment;
 import com.licrafter.happylife.ui.adapter.MainAdapter;
+import com.licrafter.happylife.util.Constants;
 
 import butterknife.Bind;
 
@@ -42,7 +45,7 @@ public class MainFragment extends BaseFragment {
         categoryTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         categoryTabLayout.setTabTextColors(getResources().getColor(R.color.grey), getResources().getColor(R.color.white));
         ViewCompat.setElevation(categoryTabLayout, getResources().getDimension(R.dimen.appbar_elevation));
-        categoryViewPager.setAdapter(new MainAdapter(getBaseActivity(), getChildFragmentManager()));
+        categoryViewPager.setAdapter(new MainAdapter(getBaseActivity(),getChildFragmentManager()));
         categoryTabLayout.setupWithViewPager(categoryViewPager);
     }
 
@@ -52,7 +55,7 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    public void initData() {
+    public void loadData() {
 
     }
 

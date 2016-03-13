@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,16 +22,14 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/2/19.
  */
-public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
+public abstract class GoodsListAdapter extends RecyclerView.Adapter {
 
     protected LayoutInflater layoutInflater;
     protected Context context;
     protected ArrayList<ItemData> mDatas;
-    private OnLoadMoreListener onLoadMoreListener;
-    private boolean isLoading;
     private boolean hasNextPage;
 
-    public GoodsLoadMoreAdapter(Context context, ArrayList<ItemData> data) {
+    public GoodsListAdapter(Context context, ArrayList<ItemData> data) {
         this.context = context;
         this.mDatas = data;
         this.layoutInflater = LayoutInflater.from(context);
@@ -91,16 +88,9 @@ public abstract class GoodsLoadMoreAdapter extends RecyclerView.Adapter {
 
     protected abstract void bindData(RecyclerView.ViewHolder holder, int position);
 
-    public void setLoaded() {
-        isLoading = false;
-    }
 
-    public void setOnLoadMoreListener(OnLoadMoreListener listener) {
-        this.onLoadMoreListener = listener;
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
+    public void setHasNextPage(boolean hasNextPage){
+        this.hasNextPage = hasNextPage;
     }
 
     public class FooterViewHolder extends RecyclerView.ViewHolder {

@@ -3,6 +3,7 @@ package com.licrafter.happylife.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,9 +13,10 @@ import com.licrafter.happylife.R;
 import com.licrafter.happylife.base.BaseFragment;
 import com.licrafter.happylife.data.ItemData;
 import com.licrafter.happylife.data.entity.BaseGoodsData;
+import com.licrafter.happylife.listener.OnScrollBottomListener;
 import com.licrafter.happylife.mvp.presenters.GoodsListPresenter;
 import com.licrafter.happylife.mvp.views.GoodsListView;
-import com.licrafter.happylife.ui.adapter.GoodsLoadMoreAdapter;
+import com.licrafter.happylife.ui.adapter.GoodsListAdapter;
 import com.licrafter.happylife.util.Constants;
 
 import java.util.ArrayList;
@@ -27,14 +29,22 @@ import butterknife.Bind;
  */
 public class GodsListFragment extends BaseFragment implements GoodsListView {
 
+    private static final int PAGE_SIZE = 6;
+
     @Bind(R.id.goodsRecyclerView)
     RecyclerView goodsRecyclerView;
-    GoodsListPresenter goodsListPresenter;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
+    GoodsListPresenter goodsListPresenter;
     private ArrayList<ItemData> goodsList;
     private GoodsAdapter goodsAdapter;
     private String category;
+
     private String title;
+    private int pageIndex = 1;
+    private boolean hasNextPage;
+    private boolean isLoading;
 
     public static GodsListFragment newInstance(String category, String title) {
         GodsListFragment fragment = new GodsListFragment();
@@ -75,18 +85,38 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void setListeners() {
-
+        goodsRecyclerView.addOnScrollListener(onScrollBottomListener);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
     }
 
     @Override
-    public void initData() {
+    public void loadData() {
         if (goodsList.size() == 0) {
-            this.goodsListPresenter.getGoods(category);
+            this.goodsListPresenter.getGoods(category,pageIndex,PAGE_SIZE);
             if (category.equals(Constants.TYPE_ALL)) {
                 this.goodsListPresenter.getBanner();
             }
         }
     }
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            pageIndex = 1;
+            goodsListPresenter.getGoods(category,pageIndex,PAGE_SIZE);
+        }
+    };
+    private OnScrollBottomListener onScrollBottomListener = new OnScrollBottomListener() {
+        @Override
+        public void onBottom() {
+            super.onBottom();
+            android.util.Log.d("ljx","onBottom");
+            if (hasNextPage&&!isLoading){
+                goodsListPresenter.getGoods(category, pageIndex, PAGE_SIZE);
+                isLoading = true;
+            }
+        }
+    };
 
     @Override
     public void bind() {
@@ -102,7 +132,18 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void onGetGoodsSuccess(List<ItemData> goods, boolean refresh) {
+        if (swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        isLoading = false;
+        if (goods.size()<PAGE_SIZE){
+            hasNextPage = false;
+        }else {
+            hasNextPage = true;
+            pageIndex+=1;
+        }
         goodsList.addAll(goods);
+        goodsAdapter.setHasNextPage(hasNextPage);
         goodsAdapter.notifyDataSetChanged();
     }
 
@@ -114,11 +155,11 @@ public class GodsListFragment extends BaseFragment implements GoodsListView {
 
     @Override
     public void onFailure(Throwable e) {
-
+        isLoading = false;
     }
 
 
-    public class GoodsAdapter extends GoodsLoadMoreAdapter {
+    public class GoodsAdapter extends GoodsListAdapter {
 
         public GoodsAdapter(Context context, ArrayList<ItemData> data) {
             super(context, data);

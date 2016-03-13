@@ -26,16 +26,16 @@ public class GoodsModel implements IGoodsModel {
      * 分页查询商品列表
      *
      * @param category 种类
-     * @param page 页码
-     * @param size 每页数量
+     * @param page     页码
+     * @param size     每页数量
      * @return
      */
     @Override
     public Observable<GoodsData> getGoodsByType(String category, int page, int size) {
-        if (category.equals(Constants.TYPE_ALL)){
-            return getAllGoods(page,size);
-        }else {
-            return HappyLife.getInstance().getHappyService().getGoodsByCategory(Query.CateGoryQuery(category),Query.CREATED_ASC);
+        if (category.equals(Constants.TYPE_ALL)) {
+            return getAllGoods(page, size);
+        } else {
+            return HappyLife.getInstance().getHappyService().getGoodsByCategory(Query.CateGoryQuery(category), Query.CREATED_ASC, (page - 1) * size, size);
         }
     }
 
@@ -49,6 +49,6 @@ public class GoodsModel implements IGoodsModel {
     @Override
     public Observable<GoodsData> getAllGoods(int page, int size) {
 
-        return HappyLife.getInstance().getHappyService().getAllGoods("createdAt");
+        return HappyLife.getInstance().getHappyService().getAllGoods("createdAt", (page - 1) * size, size);
     }
 }
